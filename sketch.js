@@ -65,7 +65,7 @@ function draw() {
     }
     proto_task.length = scale_slider.value;
     let a = angle_slider.value;
-    proto_task.seed_info.angle_diff = (angle_slider.value)/2;
+    proto_task.seed_info.angle_diff = parseFloat(angle_slider.value);
     proto_task.seed_info.lengt_coeff = coef_slider.value/1000
     task_pool = [proto_task];
 }
