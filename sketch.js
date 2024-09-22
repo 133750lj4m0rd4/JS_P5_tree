@@ -2,7 +2,7 @@ const scale_slider = document.getElementById("scale")
 const angle_slider = document.getElementById("angle")
 const coef_slider = document.getElementById("coef")
 
-let x_dimention = 900
+let x_dimention = 900 * 2
 let y_dimention = 900
 
 let proto_task = {
@@ -11,8 +11,8 @@ let proto_task = {
     starting_point: [x_dimention/2,y_dimention],//xy
     generation: 0,
     seed_info: {
-        angle_diff: 70,
-        lengt_coeff: 0.70,
+        angle_diff: 0,
+        lengt_coeff: 1,
     },//passed by reference, not a problem in this case though
 
     create_children: function(starting_point){
@@ -58,7 +58,7 @@ function setup() {
 function draw() {
     background(0);
     stroke('white');
-    for(let i = 0; i<13; i++){
+    for(let i = 0; i<14; i++){
         for(let j = 1; j <= 2**i; j++){
             perform_task(task_pool.shift());
         }
