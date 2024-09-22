@@ -1,5 +1,9 @@
-x_dimention = 900
-y_dimention = 900
+const scale_slider = document.getElementById("scale")
+const angle_slider = document.getElementById("angle")
+const coef_slider = document.getElementById("coef")
+
+let x_dimention = 900
+let y_dimention = 900
 
 let proto_task = {
     length: 200,//px
@@ -54,10 +58,14 @@ function setup() {
 function draw() {
     background(0);
     stroke('white');
-    for(let i = 0; i<15; i++){
+    for(let i = 0; i<13; i++){
         for(let j = 1; j <= 2**i; j++){
             perform_task(task_pool.shift());
         }
     }
-    task_pool = [proto_task]
+    proto_task.length = scale_slider.value;
+    let a = angle_slider.value;
+    proto_task.seed_info.angle_diff = (angle_slider.value)/2;
+    proto_task.seed_info.lengt_coeff = coef_slider.value/1000
+    task_pool = [proto_task];
 }
