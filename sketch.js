@@ -2,13 +2,13 @@ const scale_slider = document.getElementById("scale")
 const angle_slider = document.getElementById("angle")
 const coef_slider = document.getElementById("coef")
 
-let x_dimention = 900 * 2
-let y_dimention = 900
+let x_dimention = 900
+let y_dimention = 800
 
 let proto_task = {
     length: 200,//px
     angle: 0,//degr
-    starting_point: [x_dimention/2,y_dimention],//xy
+    starting_point: [x_dimention/2,y_dimention*0.9],//xy
     generation: 0,
     seed_info: {
         angle_diff: 0,
@@ -30,7 +30,8 @@ let proto_task = {
 }
 
 let task_pool = [proto_task];
-let limit = 10;
+let weight = 10;
+let color_pool = ["#00DDDD","#DD00DD","#DDDD00","#DD0000","#00DD00","#0000DD",]
 
 function shift_point(point, length, degree) {
     degree = degree * (Math.PI/180);//convert to radians
@@ -57,8 +58,12 @@ function setup() {
 
 function draw() {
     background(0);
-    stroke('white');
-    for(let i = 0; i<14; i++){
+    //stroke('white');
+    //strokeWeight(weight)
+
+    for(let i = 0; i<13; i++){
+        stroke(color_pool[i%color_pool.length])
+        strokeWeight(weight-i > 0 ? weight-i : 1)
         for(let j = 1; j <= 2**i; j++){
             perform_task(task_pool.shift());
         }
