@@ -5,6 +5,8 @@ const coef_slider = document.getElementById("coef")
 let x_dimention = 900
 let y_dimention = 800
 
+refresh_picture_trigger = 0
+
 let proto_task = {
     length: 200,//px
     angle: 0,//degr
@@ -15,7 +17,7 @@ let proto_task = {
         lengt_coeff: 1,
     },//passed by reference, not a problem in this case though
 
-    create_children: function(starting_point){
+    create_children: function(starting_point) {
         child1 = Object.create(this);
         child1.starting_point = starting_point;
         child1.length *= child1.seed_info.lengt_coeff;
@@ -31,7 +33,8 @@ let proto_task = {
 
 let task_pool = [proto_task];
 let weight = 10;
-let color_pool = ["#00DDDD","#DD00DD","#DDDD00","#DD0000","#00DD00","#0000DD",]
+let color_pool = ["#00AAAA","#AA00AA","#AAAA00",
+                  "#AA0000","#00AA00","#0000AA",]
 
 function shift_point(point, length, degree) {
     degree = degree * (Math.PI/180);//convert to radians
@@ -42,7 +45,7 @@ function shift_point(point, length, degree) {
     return(n_point);
 }
 
-function perform_task(task){
+function perform_task(task) {
     starting_point = task.starting_point;
     ending_point = shift_point(starting_point,
                                task.length,
@@ -57,20 +60,24 @@ function setup() {
 }
 
 function draw() {
-    background(0);
-    //stroke('white');
-    //strokeWeight(weight)
-
-    for(let i = 0; i<13; i++){
-        stroke(color_pool[i%color_pool.length])
-        strokeWeight(weight-i > 0 ? weight-i : 1)
-        for(let j = 1; j <= 2**i; j++){
-            perform_task(task_pool.shift());
-        }
+    if (refresh_picture_trigger == float(scale_slider.value) + float(angle_slider.value) + float(coef_slider.value)) {
+        return
     }
+    
+    refresh_picture_trigger = float(scale_slider.value) + float(angle_slider.value) + float(coef_slider.value)
+
+    background(0);
+
     proto_task.length = scale_slider.value;
-    let a = angle_slider.value;
     proto_task.seed_info.angle_diff = parseFloat(angle_slider.value);
     proto_task.seed_info.lengt_coeff = coef_slider.value/1000
     task_pool = [proto_task];
+
+    for(let i = 0; i<13; i++) {
+        stroke(color_pool[i%color_pool.length])
+        strokeWeight(weight-i > 0 ? weight-i : 1)
+        for(let j = 1; j <= 2**i; j++) {
+            perform_task(task_pool.shift());
+        }
+    }
 }
