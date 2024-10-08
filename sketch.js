@@ -2,8 +2,8 @@ const scale_slider = document.getElementById("scale")
 const angle_slider = document.getElementById("angle")
 const coef_slider = document.getElementById("coef")
 
-let x_dimention = 900
-let y_dimention = 800
+let x_dimention = 1100
+let y_dimention = 1100
 
 refresh_picture_trigger = 0
 

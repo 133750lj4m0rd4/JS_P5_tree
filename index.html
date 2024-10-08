@@ -10,15 +10,31 @@
 
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
+
+    <style>
+      .slider-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        color: #dddddd;
+        font-size: 20pt;
+        width: 95%;
+        padding: 10px; /* Optional: padding */
+        text-align: right;
+        margin: 30px;
+      }
+    </style>
   </head>
 
-  <body>
-    scale<br>
-    <input type="range" id="scale" min="0" max="700" value="100" style="width:700px;"/><br>
-    angle<br>
-    <input type="range" id="angle" min="0" max="180" value="45" style="width:700px;"/><br>
-    coef<br>
-    <input type="range" id="coef" min="0" max="1000" value="900" style="width:700px;"/><br>
+  <body style="background-color:#111111;">
+    <div class="slider-container">
+      scale<br>
+      <input type="range" id="scale" min="0" max="700" value="100" style="width:700px;"/><br>
+      angle<br>
+      <input type="range" id="angle" min="0" max="180" value="45" style="width:700px;"/><br>
+      coef<br>
+      <input type="range" id="coef" min="0" max="1000" value="900" style="width:700px;"/><br>
+    </div>
     <script src="sketch.js"></script>
   </body>
 </html>
