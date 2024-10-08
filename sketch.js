@@ -6,6 +6,8 @@ let x_dimention = 1100
 let y_dimention = 1100
 
 refresh_picture_trigger = 0
+generation_limit = 15
+generation_limit_trigger = false
 
 let proto_task = {
     length: 200,//px
@@ -32,7 +34,7 @@ let proto_task = {
 }
 
 let task_pool = [proto_task];
-let weight = 10;
+let weight = 14;
 let color_pool = ["#00AAAA","#AA00AA","#AAAA00",
                   "#AA0000","#00AA00","#0000AA",]
 
@@ -59,25 +61,40 @@ function setup() {
     createCanvas(x_dimention, y_dimention);
 }
 
-function draw() {
-    if (refresh_picture_trigger == float(scale_slider.value) + float(angle_slider.value) + float(coef_slider.value)) {
-        return
-    }
-    
-    refresh_picture_trigger = float(scale_slider.value) + float(angle_slider.value) + float(coef_slider.value)
-
+function begin_drawing_tree() {
     background(0);
 
     proto_task.length = scale_slider.value;
     proto_task.seed_info.angle_diff = parseFloat(angle_slider.value);
     proto_task.seed_info.lengt_coeff = coef_slider.value/1000
     task_pool = [proto_task];
+    generation_limit_trigger = false
+}
 
-    for(let i = 0; i<13; i++) {
-        stroke(color_pool[i%color_pool.length])
-        strokeWeight(weight-i > 0 ? weight-i : 1)
-        for(let j = 1; j <= 2**i; j++) {
-            perform_task(task_pool.shift());
+function continue_drawing_tree() {
+    if (generation_limit_trigger) return
+
+    for(let i = 0; i<3000; i++) {
+        task = task_pool.shift()
+        if (task.generation > generation_limit){
+            generation_limit_trigger = true
+            return
         }
+        stroke(color_pool[task.generation%color_pool.length])
+        strokeWeight(weight-task.generation > 0 ? weight-task.generation : 1)
+        perform_task(task);
     }
+}
+
+function draw() {
+    if (refresh_picture_trigger == float(scale_slider.value) + float(angle_slider.value) + float(coef_slider.value)) {
+        continue_drawing_tree()
+        return
+    }
+    else{
+        begin_drawing_tree()
+        continue_drawing_tree()
+    }
+
+    refresh_picture_trigger = float(scale_slider.value) + float(angle_slider.value) + float(coef_slider.value)
 }
