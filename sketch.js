@@ -2,7 +2,7 @@ const scale_slider = document.getElementById("scale")
 const angle_slider = document.getElementById("angle")
 const coef_slider = document.getElementById("coef")
 
-let x_dimention = 1100
+let x_dimention = 1800
 let y_dimention = 1100
 
 refresh_picture_trigger = 0
@@ -34,9 +34,8 @@ let proto_task = {
 }
 
 let task_pool = [proto_task];
-let weight = 14;
-let color_pool = ["#00AAAA","#AA00AA","#AAAA00",
-                  "#AA0000","#00AA00","#0000AA",]
+let weight = 20;
+let color_pool = ["#FF0000","#0000FF","#FFFFFF"]
 
 function shift_point(point, length, degree) {
     degree = degree * (Math.PI/180);//convert to radians
@@ -81,7 +80,7 @@ function continue_drawing_tree() {
             return
         }
         stroke(color_pool[task.generation%color_pool.length])
-        strokeWeight(weight-task.generation > 0 ? weight-task.generation : 1)
+        strokeWeight(weight-(task.generation)*2 > 0 ? weight-(task.generation)*2 : 1)
         perform_task(task);
     }
 }
