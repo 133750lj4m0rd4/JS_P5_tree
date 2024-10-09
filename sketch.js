@@ -2,8 +2,8 @@ const scale_slider = document.getElementById("scale")
 const angle_slider = document.getElementById("angle")
 const coef_slider = document.getElementById("coef")
 
-let x_dimention = 1800
-let y_dimention = 1100
+let x_dimention = 1900
+let y_dimention = 900
 
 refresh_picture_trigger = 0
 generation_limit = 15
@@ -35,7 +35,7 @@ let proto_task = {
 
 let task_pool = [proto_task];
 let weight = 20;
-let color_pool = ["#FF0000","#0000FF","#FFFFFF"]
+let color_pool = ["#DD0000","#0000DD","#DDDDDD"]
 
 function shift_point(point, length, degree) {
     degree = degree * (Math.PI/180);//convert to radians
