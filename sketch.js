@@ -96,4 +96,5 @@ function draw() {
     }
 
     refresh_picture_trigger = float(scale_slider.value) + float(angle_slider.value) + float(coef_slider.value)
+    
 }
